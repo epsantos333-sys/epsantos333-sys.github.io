@@ -1,0 +1,43 @@
+---
+import Base from '../../layouts/Base.astro';
+import Diagram from '../../components/diagrams/Diagram.astro';
+import { projects, type Project } from '../../data/projects';
+
+export function getStaticPaths() {
+  return projects.map((project) => ({ params: { slug: project.slug }, props: { project } }));
+}
+
+const { project: p } = Astro.props as { project: Project };
+---
+<Base title={p.title} description={p.summary}>
+  <p><a class="mono back" href="/projects/">← projects</a></p>
+  <p class="label">{p.course} · {p.dates}</p>
+  <h1>{p.title}</h1>
+  <p class="status" data-status={p.status}>{p.status}</p>
+  <ul class="tags">{p.tags.map((t) => <li>{t}</li>)}</ul>
+
+  <Diagram kind={p.diagram} caption={p.diagramCaption} />
+
+  <h2>Problem</h2>
+  <p>{p.problem}</p>
+
+  <h2>Approach</h2>
+  <ol>{p.approach.map((step) => <li>{step}</li>)}</ol>
+
+  <h2>Results</h2>
+  <ul>{p.results.map((r) => <li>{r}</li>)}</ul>
+
+  {p.repo && (
+    <>
+      <h2>Code</h2>
+      <p><a href={p.repo}>{p.repo.replace('https://', '')}</a></p>
+      {p.repoNote && <p class="muted">{p.repoNote}</p>}
+    </>
+  )}
+</Base>
+
+<style>
+  .back { text-decoration: none; font-size: 0.9rem; }
+  ol, ul:not(.tags) { padding-left: 1.3em; }
+  li { margin-bottom: 0.5em; }
+</style>

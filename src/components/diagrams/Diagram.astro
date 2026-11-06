@@ -1,0 +1,18 @@
+---
+import SecomDiagram from './SecomDiagram.astro';
+import FermentationDiagram from './FermentationDiagram.astro';
+import EosDiagram from './EosDiagram.astro';
+import type { Project } from '../../data/projects';
+
+interface Props {
+  kind: Project['diagram'];
+  caption?: string;
+}
+const { kind, caption } = Astro.props;
+const byKind = { secom: SecomDiagram, fermentation: FermentationDiagram, eos: EosDiagram };
+const Svg = byKind[kind];
+---
+<figure class="diagram card">
+  <Svg />
+  {caption && <figcaption>{caption}</figcaption>}
+</figure>

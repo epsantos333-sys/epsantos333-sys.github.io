@@ -1,0 +1,21 @@
+---
+import type { Project } from '../data/projects';
+interface Props { project: Project }
+const { project: p } = Astro.props;
+---
+<a class="card project-card" href={`/projects/${p.slug}/`}>
+  <div class="meta">
+    <span class="label">{p.course}</span>
+    <span class="status" data-status={p.status}>{p.status}</span>
+  </div>
+  <h3>{p.title}</h3>
+  <p class="muted">{p.summary}</p>
+  <ul class="tags">{p.tags.map((t) => <li>{t}</li>)}</ul>
+</a>
+
+<style>
+  .project-card { display: block; text-decoration: none; color: inherit; transition: border-color 0.15s; }
+  .project-card:hover { border-color: var(--accent); color: inherit; }
+  .meta { display: flex; justify-content: space-between; gap: 12px; margin-bottom: 8px; flex-wrap: wrap; }
+  h3 { color: var(--text); }
+</style>

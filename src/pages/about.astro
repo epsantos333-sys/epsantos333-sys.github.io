@@ -1,0 +1,104 @@
+---
+import Base from '../layouts/Base.astro';
+import { existsSync } from 'node:fs';
+
+// Show the download link only once a resume PDF is in public/.
+const hasResume = existsSync('public/Eli_Santos_Resume.pdf');
+
+// Experience entries copied from CV v0.3 (~/Dev/grad-apps/cv). Keep the two in sync.
+const experience = [
+  {
+    role: 'Facilities Chemical Engineering Intern',
+    org: 'Micron Technology, Boise, ID',
+    dates: 'May – Aug 2026',
+    points: [
+      'Worked with Micron’s Enable AI team to define and plan a Copilot Studio agent, now piloted by the site chemical engineering team, that returns cited valve, tool and project records across 200+ systems. Lookups went from 30 minutes to seconds.',
+      'Closed a 10-year baseline data gap on a safety-critical solvent waste tank: quantified corrosion rate and remaining life, and created the pilot method now used to set inspection intervals for the remaining assets.',
+      'Consolidated 20 years of alarm records into technician reference sheets, classifying 33 recurring alarm conditions and tracing their root causes.',
+      'Wrote the site tank and vessel integrity standard for 4 facilities teams, combining API and ASTM codes into one inspection specification.',
+    ],
+  },
+  {
+    role: 'Cell and Process Engineering Intern',
+    org: 'Panasonic Energy of North America, Sparks, NV',
+    dates: 'May – Aug 2025',
+    points: [
+      'Modeled particle-induced current spikes with an RC circuit to support moving high-voltage leak inspection from DC to AC on 3 lines. Reject re-runs and teardowns confirmed it removed false leak rejects while still catching shorts.',
+      'Cut the false-reject rate 50% on anode tab-folding vision inspection by refining edge-intensity thresholds and adding a pixel-count check, recovering an estimated 64,000 cells per year.',
+      'Built SQL pipelines from MES and used Python and JMP to correlate machine alarms with defect patterns.',
+    ],
+  },
+  {
+    role: 'Undergraduate Researcher',
+    org: 'Dr. Mark Nesbit Lab, UNR Department of Chemistry',
+    dates: 'Mar 2024 – Oct 2025',
+    points: [
+      'Developed a vanadium-based catalyst system for the CO-to-methanol reaction with graduate students: synthesis, catalysis and mechanistic studies of organometallic molecules.',
+      'Used GC-MS and NMR for Suzuki coupling development, and Schlenk-line, glovebox and high-vacuum techniques for air-sensitive synthesis.',
+    ],
+  },
+];
+
+const skills = [
+  ['Programming and data', 'Python (pandas, NumPy, SciPy, Matplotlib, scikit-learn, PyTorch), SQL, R, JMP, Excel'],
+  ['Modeling and methods', 'Kinetic and thermodynamic modeling, nonlinear regression, root-finding and ODE solving, SPC, root cause and failure analysis, FMEA and FTA'],
+  ['Engineering tools', 'ChemCAD, AutoCAD, P&ID interpretation, MES, Microsoft Copilot Studio'],
+];
+---
+<Base title="About" description="Education, experience and skills of Eli Santos, chemical engineering student at UNR.">
+  <p class="label">About</p>
+  <h1>Experience and background</h1>
+  <p class="lede">
+    Chemical engineering senior at the University of Nevada, Reno (B.S. expected May 2027). I’m interested in
+    physics-informed and hybrid machine learning for manufacturing and chemical process systems.
+  </p>
+  {hasResume && <p><a class="mono" href="/Eli_Santos_Resume.pdf">↓ Download resume (PDF)</a></p>}
+
+  <h2>Experience</h2>
+  <div class="timeline">
+    {experience.map((e) => (
+      <article class="card">
+        <div class="head">
+          <h3>{e.role}</h3>
+          <span class="mono muted dates">{e.dates}</span>
+        </div>
+        <p class="label org">{e.org}</p>
+        <ul>{e.points.map((pt) => <li>{pt}</li>)}</ul>
+      </article>
+    ))}
+  </div>
+
+  <h2>Education</h2>
+  <div class="card">
+    <h3>University of Nevada, Reno</h3>
+    <p class="muted">B.S. Chemical Engineering, expected May 2027</p>
+    <p>
+      Coursework: Transport Phenomena I and II, Thermodynamics, Reactor Design, Separation Processes, Process Design
+      and Economics, Computers in Chemical Engineering, Probability and Statistics, Materials Characterization,
+      Particle Technology.
+    </p>
+  </div>
+
+  <h2>Leadership</h2>
+  <ul>
+    <li><strong>President, AIChE UNR Student Chapter</strong> (Aug 2026 – present; Vice President 2025–26, Secretary 2024–25). Lead the officer team and organize industry site tours with regional manufacturers.</li>
+    <li><strong>PASS Leader and Peer Tutor</strong>, UNR Tutoring Center (2025). Led weekly exam reviews for 30+ students.</li>
+  </ul>
+
+  <h2>Skills</h2>
+  <dl class="skills">
+    {skills.map(([k, v]) => (<><dt class="label">{k}</dt><dd>{v}</dd></>))}
+  </dl>
+</Base>
+
+<style>
+  .lede { font-size: 1.15rem; max-width: 40em; }
+  .timeline { display: grid; gap: 16px; }
+  .head { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 4px 12px; align-items: baseline; }
+  .head h3 { margin: 0; }
+  .org { margin: 4px 0 10px; }
+  ul { padding-left: 1.2em; }
+  li { margin-bottom: 0.45em; }
+  .skills dt { margin-top: 12px; }
+  .skills dd { margin: 2px 0 0; }
+</style>

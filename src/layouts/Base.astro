@@ -1,0 +1,89 @@
+---
+import '../styles/global.css';
+
+interface Props {
+  title: string;
+  description?: string;
+}
+
+const { title, description = 'Eli Santos, chemical engineering portfolio: process modeling, monitoring and physics-informed ML.' } = Astro.props;
+const fullTitle = title === 'Home' ? 'Eli Santos | Chemical Engineering' : `${title} | Eli Santos`;
+const path = Astro.url.pathname;
+const nav = [
+  { href: '/', label: 'Home' },
+  { href: '/projects/', label: 'Projects' },
+  { href: '/about/', label: 'About' },
+];
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content={description} />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&display=swap"
+      rel="stylesheet"
+    />
+    <title>{fullTitle}</title>
+  </head>
+  <body>
+    <header class="site-header">
+      <div class="wrap bar">
+        <a class="brand mono" href="/">eli_santos<span class="cursor">_</span></a>
+        <nav>
+          {nav.map((item) => (
+            <a href={item.href} aria-current={(item.href === '/' ? path === '/' : path.startsWith(item.href)) ? 'page' : undefined}>
+              {item.label}
+            </a>
+          ))}
+        </nav>
+      </div>
+    </header>
+    <main class="wrap">
+      <slot />
+    </main>
+    <footer class="wrap site-footer">
+      <span class="mono muted">© {new Date().getFullYear()} Eli Santos</span>
+      <span class="links">
+        <a href="https://github.com/epsantos333-sys">GitHub</a>
+        <a href="https://www.linkedin.com/in/elisantosengineering">LinkedIn</a>
+        <a href="mailto:eli.santos.paul@gmail.com">Email</a>
+      </span>
+    </footer>
+  </body>
+</html>
+
+<style>
+  .site-header {
+    border-bottom: 1px solid var(--border);
+    background: color-mix(in srgb, var(--bg) 88%, transparent);
+    backdrop-filter: blur(6px);
+    position: sticky;
+    top: 0;
+    z-index: 10;
+  }
+  .bar { display: flex; align-items: center; justify-content: space-between; gap: 16px; height: 56px; }
+  .brand { color: var(--text); text-decoration: none; font-weight: 500; }
+  .cursor { color: var(--accent); }
+  nav { display: flex; gap: 18px; }
+  nav a { color: var(--muted); text-decoration: none; font-size: 0.95rem; }
+  nav a:hover, nav a[aria-current='page'] { color: var(--text); }
+  nav a[aria-current='page'] { box-shadow: inset 0 -2px 0 var(--accent); }
+  main { padding-top: 40px; padding-bottom: 56px; min-height: 70vh; }
+  .site-footer {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 12px;
+    border-top: 1px solid var(--border);
+    padding-top: 20px;
+    padding-bottom: 32px;
+    font-size: 0.9rem;
+  }
+  .links { display: flex; gap: 16px; }
+</style>

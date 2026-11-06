@@ -1,0 +1,55 @@
+---
+import Base from '../layouts/Base.astro';
+import ProjectCard from '../components/ProjectCard.astro';
+import Diagram from '../components/diagrams/Diagram.astro';
+import { projects } from '../data/projects';
+---
+<Base title="Home">
+  <section class="hero">
+    <p class="label">Chemical engineering · UNR · B.S. May 2027</p>
+    <h1>Eli Santos</h1>
+    <p class="lede">
+      I build models of chemical and manufacturing processes, and I test them honestly. My focus is
+      physics-informed and hybrid machine learning, process monitoring and data-driven yield improvement.
+    </p>
+    <p class="muted">
+      Internships at Micron Technology (facilities chemical engineering) and Panasonic Energy (cell and process
+      engineering). Applying to master’s programs for Fall 2027.
+    </p>
+    <div class="cta">
+      <a class="btn" href="/projects/">See projects</a>
+      <a class="btn ghost" href="/about/">Experience and resume</a>
+    </div>
+  </section>
+
+  <Diagram kind="fermentation" caption="Current work: a hybrid model where a neural network corrects the growth rate inside physical mass balances." />
+
+  <h2>Projects</h2>
+  <div class="grid">
+    {projects.map((p) => <ProjectCard project={p} />)}
+  </div>
+
+  <h2 id="contact">Contact</h2>
+  <p>
+    Email <a href="mailto:eli.santos.paul@gmail.com">eli.santos.paul@gmail.com</a>, or find me on <a href="https://www.linkedin.com/in/elisantosengineering">LinkedIn</a> and <a href="https://github.com/epsantos333-sys">GitHub</a>.
+  </p>
+</Base>
+
+<style>
+  .hero { padding: 24px 0 8px; }
+  .lede { font-size: 1.2rem; max-width: 40em; }
+  .cta { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 20px; }
+  .btn {
+    font-family: var(--font-mono);
+    font-size: 0.9rem;
+    padding: 9px 16px;
+    border-radius: 4px;
+    background: var(--accent);
+    color: var(--bg);
+    text-decoration: none;
+  }
+  .btn:hover { background: var(--accent-2); color: var(--bg); }
+  .btn.ghost { background: transparent; color: var(--accent); border: 1px solid var(--accent); }
+  .btn.ghost:hover { color: var(--accent-2); border-color: var(--accent-2); background: transparent; }
+  .grid { display: grid; gap: 16px; }
+</style>
