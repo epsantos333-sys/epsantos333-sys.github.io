@@ -28,7 +28,7 @@ const nav = [
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&display=swap"
+      href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&display=swap"
       rel="stylesheet"
     />
     <title>{fullTitle}</title>
@@ -36,7 +36,7 @@ const nav = [
   <body>
     <header class="site-header">
       <div class="wrap bar">
-        <a class="brand mono" href="/">eli_santos<span class="cursor">_</span></a>
+        <a class="brand" href="/">Eli Santos</a>
         <nav>
           {nav.map((item) => (
             <a href={item.href} aria-current={(item.href === '/' ? path === '/' : path.startsWith(item.href)) ? 'page' : undefined}>
@@ -51,7 +51,7 @@ const nav = [
     </main>
     <div class="wrap mr-strip" aria-hidden="true"><SpcChart part="mr" /></div>
     <footer class="wrap site-footer">
-      <span class="mono muted">© {new Date().getFullYear()} Eli Santos</span>
+      <span>© {new Date().getFullYear()} Eli Santos</span>
       <span class="links">
         <a href="https://github.com/epsantos333-sys">GitHub</a>
         <a href="https://www.linkedin.com/in/elisantosengineering">LinkedIn</a>
@@ -71,8 +71,8 @@ const nav = [
     z-index: 10;
   }
   .bar { display: flex; align-items: center; justify-content: space-between; gap: 16px; height: 56px; }
-  .brand { color: var(--text); text-decoration: none; font-weight: 500; }
-  .cursor { color: var(--accent); }
+  .bar, .site-footer { font-family: var(--font-sans); }
+  .brand { color: var(--text); text-decoration: none; font-weight: 600; }
   nav { display: flex; gap: 18px; }
   nav a { color: var(--muted); text-decoration: none; font-size: 0.95rem; }
   @media (max-width: 480px) {
@@ -81,7 +81,7 @@ const nav = [
     nav a { font-size: 0.88rem; }
   }
   nav a:hover, nav a[aria-current='page'] { color: var(--text); }
-  nav a[aria-current='page'] { box-shadow: inset 0 -2px 0 var(--accent); }
+  nav a[aria-current='page'] { box-shadow: inset 0 -1px 0 var(--text); }
   main { padding-top: 40px; padding-bottom: 56px; min-height: 70vh; }
   .mr-strip { height: 48px; opacity: 0.22; }
   .site-footer {
@@ -93,6 +93,7 @@ const nav = [
     padding-top: 20px;
     padding-bottom: 32px;
     font-size: 0.9rem;
+    color: var(--muted);
   }
   .links { display: flex; gap: 16px; }
 </style>

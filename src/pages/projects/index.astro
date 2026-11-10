@@ -1,17 +1,12 @@
 ---
 import Base from '../../layouts/Base.astro';
-import ProjectCard from '../../components/ProjectCard.astro';
+import Entry from '../../components/Entry.astro';
 import { projects } from '../../data/projects';
 ---
 <Base title="Projects" description="Process modeling and monitoring projects by Eli Santos.">
-  <p class="label">Projects</p>
-  <h1>Modeling and monitoring</h1>
-  <p class="muted">Each page covers the problem, the method and the results so far.</p>
-  <div class="grid">
-    {projects.map((p) => <ProjectCard project={p} />)}
-  </div>
+  <h1>Projects</h1>
+  <p>Both are still in progress. I add results as each step is finished.</p>
+  {projects.map((p) => (
+    <Entry title={p.title} href={`/projects/${p.slug}/`} meta={`${p.context}. ${p.status}.`} text={p.blurb} />
+  ))}
 </Base>
-
-<style>
-  .grid { display: grid; gap: 16px; margin-top: 24px; }
-</style>

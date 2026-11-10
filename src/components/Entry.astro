@@ -1,0 +1,25 @@
+---
+// One item in a plain list: title (linked if there's a page), a meta line, and a short paragraph.
+interface Props {
+  title: string;
+  meta: string;
+  text: string;
+  href?: string;
+}
+const { title, meta, text, href } = Astro.props;
+---
+<article class="entry">
+  <h3>{href ? <a href={href}>{title}</a> : title}</h3>
+  <p class="meta">{meta}</p>
+  <p class="text">{text}</p>
+</article>
+
+<style>
+  .entry { padding: 20px 0; border-top: 1px solid var(--border); }
+  .entry:last-child { border-bottom: 1px solid var(--border); }
+  h3 { margin: 0 0 2px; }
+  h3 a { color: var(--text); text-decoration-thickness: 1px; text-decoration-color: var(--border); }
+  h3 a:hover { text-decoration-color: var(--text); }
+  .meta { font-family: var(--font-sans); font-size: 0.9rem; color: var(--muted); margin: 0 0 8px; }
+  .text { margin: 0; }
+</style>

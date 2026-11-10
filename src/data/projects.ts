@@ -1,65 +1,65 @@
-// Single source for project facts. Pages and cards read from here; edit text here, not in the pages.
-// Every number below comes from Eli's CV (v0.3) or his verified project notes.
-
-export type Status = 'in progress' | 'complete';
+// Single source for project text. Pages read from here; edit wording here, not in the pages.
+// Facts come from Eli's CV (v0.8) and his project repos. Keep it first person and plain.
 
 export interface Project {
   slug: string;
   title: string;
-  course: string;
-  dates: string;
-  status: Status;
-  summary: string;
-  tags: string[];
-  problem: string;
-  approach: string[];
-  results: string[];
+  context: string;
+  status: string;
+  blurb: string;
+  intro: string[];
+  did: string[];
+  now: string;
+  figure?: { src: string; alt: string; caption: string };
   repo?: string;
-  repoNote?: string;
 }
 
 export const projects: Project[] = [
   {
-    slug: 'hybrid-fermentation',
-    title: 'Hybrid physics + ML model for batch wine fermentation',
-    course: 'CHE 440 Reactor Design',
-    dates: 'Fall 2026',
-    status: 'in progress',
-    summary:
-      'Mechanistic kinetics, gradient-boosted trees and a hybrid neural ODE compared on held-out fermentation runs, then used to pick a fermentation temperature.',
-    tags: ['Python', 'SciPy', 'PyTorch', 'kinetics', 'neural ODE'],
-    problem:
-      'Wine yeast batches at 12 and 18 °C show a long lag phase that standard Monod kinetics miss. A pure ML model can fit the curves but has no reason to respect the mass balance. The question is whether a hybrid model predicts unseen runs better than either one alone.',
-    approach: [
-      'Rebuilt the analysis dataset from the raw open data: 216 batch runs of S. cerevisiae across 9 strains, 3 temperatures and 2 sugar levels. It matches the team’s independent version to within 1e-7 g/L for all 1,950 samples.',
-      'Mechanistic model: Monod growth with ethanol inhibition, Luedeking–Piret ethanol production, first-order death and Arrhenius temperature terms, fitted by nonlinear least squares.',
-      'Baseline ML model: gradient-boosted trees on the same held-out split.',
-      'Hybrid neural ODE that keeps the mass balances and learns a correction for the lag phase (after Psichogios and Ungar, 1992).',
-      'Optimization: use the best model to choose a fermentation temperature (12–25 °C) for ethanol productivity, with every batch required to ferment to dryness and a jacket energy balance setting the cooling duty.',
+    slug: "hybrid-fermentation",
+    title: "Hybrid model for wine fermentation",
+    context: "CHE 440 Reactor Design, Fall 2026",
+    status: "In progress",
+    blurb:
+      "Monod-type kinetics do most of the work, and a small neural network learns the lag phase they miss. Group project on 216 batch fermentations.",
+    intro: [
+      "Wine yeast fermented at 12 and 18 °C sits in a long lag phase before it takes off. Standard Monod kinetics can't capture that. A pure ML model can fit the curves, but nothing stops it from predicting more ethanol than the sugar allows.",
+      "So the question is simple: does a hybrid model predict runs it hasn't seen better than either approach alone?",
     ],
-    results: ['Model comparison and temperature optimization are in progress. Final report due November 30, 2026.'],
-    repo: 'https://github.com/epsantos333-sys/che440-hybrid-fermentation',
-    repoNote: 'Code goes public after the final report, with the team’s OK.',
+    did: [
+      "Rebuilt the dataset from the raw open data, 216 batch runs of S. cerevisiae over 9 strains, 3 temperatures and 2 sugar levels. It matches the team's independent version to within 1e-7 g/L on all 1,950 samples.",
+      "Fitting a mechanistic model by nonlinear least squares, with Monod growth, ethanol inhibition, Luedeking-Piret ethanol production, first-order death and Arrhenius temperature terms.",
+      "Training gradient-boosted trees on the same held-out runs as a data-only baseline.",
+      "Building a hybrid neural ODE that keeps the mass balances and learns a correction for the lag phase, following Psichogios and Ungar (1992).",
+      "Last step: use the best model to pick a fermentation temperature between 12 and 25 °C for ethanol productivity. Every batch has to ferment dry, and a jacket energy balance sets the cooling duty.",
+    ],
+    now: "Still in progress. The final report is due November 30, 2026, and the code goes public after that with the team's OK.",
+    repo: "https://github.com/epsantos333-sys/che440-hybrid-fermentation",
   },
   {
-    slug: 'secom-spc',
-    title: 'Process monitoring and fail prediction on semiconductor fab data',
-    course: 'Independent project (UCI SECOM)',
-    dates: 'Oct 2026 – present',
-    status: 'in progress',
-    summary:
-      'Univariate and PCA-based multivariate SPC on 1,567 production runs and 590 sensors, plus an honest test of whether sensor data can predict line-test fails.',
-    tags: ['Python', 'pandas', 'scikit-learn', 'SPC', 'PCA'],
-    problem:
-      'SECOM is real data from a semiconductor line: 590 unnamed sensors per run and a pass/fail label from the in-house line test. The process changes over the four months of data. Monitoring and prediction both have to be checked in time order, or the results look better than they are.',
-    approach: [
-      'Data audit and a time-ordered train/test split.',
-      'Cleaning fit on training runs only, then I-MR control charts as a univariate baseline.',
-      'PCA-based multivariate monitoring with Hotelling T² and SPE charts, control limits set from held-out data, and contribution plots to find the sensors behind an alarm.',
-      'Fail prediction with a time-ordered split, compared against a shuffled split to measure leakage.',
-      'A short paper-style report and a reproducible repository.',
+    slug: "secom-spc",
+    title: "Process monitoring on semiconductor fab data",
+    context: "Independent project, October 2026 to now",
+    status: "In progress",
+    blurb:
+      "Control charts and PCA monitoring on four months of real fab data, and a check on whether sensor readings can predict which runs fail.",
+    intro: [
+      "SECOM is a public dataset from a semiconductor line. It has 1,567 production runs, 590 unnamed sensors, and a pass or fail result from the line test for each run.",
+      "The process changes over those four months. If you shuffle the runs before splitting them, later runs leak into training and the results look better than they are. Everything here is split in time order.",
     ],
-    results: ['Analysis in progress. Results and figures will be added here as each stage is finished.'],
-    repo: 'https://github.com/epsantos333-sys/secom-spc',
+    figure: {
+      src: "/figures/imr_s059.png",
+      alt: "I-MR control chart for sensor s059 over 1,567 runs, with limits from the training runs",
+      caption:
+        "I-MR chart for sensor s059. The limits come from the training runs, left of the solid line, and each x is a run that failed the line test. The sensor's spread drops sharply partway through training.",
+    },
+    did: [
+      "Audited the data and split it in time order: earlier runs for training, later runs for testing.",
+      "Cleaned the sensors using training runs only, then set up I-MR control charts as a baseline.",
+      "Next: PCA monitoring with Hotelling T² and SPE charts, with control limits set from held-out data.",
+      "After that: predict fails with a time-ordered split, and compare against a shuffled split to measure the leakage.",
+    ],
+    now: "The first two steps are done. Results go up here as each of the others is finished.",
+    repo: "https://github.com/epsantos333-sys/secom-spc",
   },
 ];

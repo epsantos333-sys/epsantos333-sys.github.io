@@ -8,33 +8,31 @@ export function getStaticPaths() {
 
 const { project: p } = Astro.props as { project: Project };
 ---
-<Base title={p.title} description={p.summary}>
-  <p><a class="mono back" href="/projects/">← projects</a></p>
-  <p class="label">{p.course} · {p.dates}</p>
+<Base title={p.title} description={p.blurb}>
+  <p><a class="back" href="/projects/">All projects</a></p>
   <h1>{p.title}</h1>
-  <p class="status" data-status={p.status}>{p.status}</p>
-  <ul class="tags">{p.tags.map((t) => <li>{t}</li>)}</ul>
+  <p class="meta">{p.context}. {p.status}.</p>
 
-  <h2>Problem</h2>
-  <p>{p.problem}</p>
+  {p.intro.map((para) => <p>{para}</p>)}
 
-  <h2>Approach</h2>
-  <ol>{p.approach.map((step) => <li>{step}</li>)}</ol>
-
-  <h2>Results</h2>
-  <ul>{p.results.map((r) => <li>{r}</li>)}</ul>
-
-  {p.repo && (
-    <>
-      <h2>Code</h2>
-      <p><a href={p.repo}>{p.repo.replace('https://', '')}</a></p>
-      {p.repoNote && <p class="muted">{p.repoNote}</p>}
-    </>
+  {p.figure && (
+    <figure>
+      <img src={p.figure.src} alt={p.figure.alt} width="1350" height="750" loading="lazy" />
+      <figcaption>{p.figure.caption}</figcaption>
+    </figure>
   )}
+
+  <h2>What I've done so far</h2>
+  <ul>{p.did.map((d) => <li>{d}</li>)}</ul>
+
+  <h2>Where it stands</h2>
+  <p>{p.now}</p>
+  {p.repo && <p>Code: <a href={p.repo}>{p.repo.replace('https://', '')}</a></p>}
 </Base>
 
 <style>
-  .back { text-decoration: none; font-size: 0.9rem; }
-  ol, ul:not(.tags) { padding-left: 1.3em; }
-  li { margin-bottom: 0.5em; }
+  .meta { margin-bottom: 1.6em; }
+  figure { margin: 2rem 0; }
+  figure img { display: block; width: 100%; height: auto; border: 1px solid var(--border); }
+  figcaption { font-family: var(--font-sans); font-size: 0.88rem; color: var(--muted); margin-top: 8px; line-height: 1.5; }
 </style>

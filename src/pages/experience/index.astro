@@ -1,22 +1,12 @@
 ---
 import Base from '../../layouts/Base.astro';
-import ExperienceCard from '../../components/ExperienceCard.astro';
+import Entry from '../../components/Entry.astro';
 import { roles } from '../../data/experience';
 ---
 <Base title="Experience" description="Internships at Micron Technology and Panasonic Energy, and undergraduate research at UNR.">
-  <p class="label">Experience</p>
-  <h1>Industry and research</h1>
-  <p class="lede muted">
-    Two summers in manufacturing: semiconductor fab chemical systems at Micron and battery cell production at
-    Panasonic. Both showed me how much production and sensor data a plant collects, and pushed me toward machine
-    learning that models physical systems.
-  </p>
-  <div class="list">
-    {roles.map((r) => <ExperienceCard role={r} />)}
-  </div>
+  <h1>Experience</h1>
+  <p>Two summers in manufacturing, one in a battery plant and one at a semiconductor site, plus a year and a half in a chemistry research lab.</p>
+  {roles.map((r) => (
+    <Entry title={r.company} href={r.slug && `/experience/${r.slug}/`} meta={`${r.role}, ${r.place}. ${r.dates}.`} text={r.blurb} />
+  ))}
 </Base>
-
-<style>
-  .lede { font-size: 1.1rem; max-width: 40em; }
-  .list { display: grid; gap: 16px; margin-top: 24px; }
-</style>

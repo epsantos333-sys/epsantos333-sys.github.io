@@ -1,108 +1,63 @@
 ---
 import Base from '../layouts/Base.astro';
-import ProjectCard from '../components/ProjectCard.astro';
-import ExperienceCard from '../components/ExperienceCard.astro';
-import { internships } from '../data/experience';
+import Entry from '../components/Entry.astro';
 import SpcChart from '../components/SpcChart.astro';
+import { internships } from '../data/experience';
 import { projects } from '../data/projects';
-
-const interests = [
-  {
-    name: 'Physics-informed machine learning',
-    detail: 'Models that learn from large datasets but keep mass and energy balances, so predictions stay physical outside the training data.',
-  },
-  {
-    name: 'Hybrid process models',
-    detail: 'Mechanistic kinetics and thermodynamics with a learned correction for the behavior first principles miss.',
-  },
-  {
-    name: 'Process monitoring',
-    detail: 'Statistical process control and multivariate monitoring on real plant and fab sensor data.',
-  },
-  {
-    name: 'Manufacturing yield',
-    detail: 'Using production data to find root causes and cut defects, as in semiconductor fabs and battery lines.',
-  },
-];
 ---
 <Base title="Home">
   <section class="hero">
     <div class="hero-chart" aria-hidden="true"><SpcChart part="i" /></div>
-    <p class="label">Chemical engineering · UNR · B.S. May 2027</p>
     <h1>Eli Santos</h1>
-    <p class="lede">
-      I build models of chemical and manufacturing processes, and I test them honestly. My focus is
-      physics-informed and hybrid machine learning, process monitoring and data-driven yield improvement.
+    <p class="meta">Chemical engineering, University of Nevada, Reno. Graduating May 2027.</p>
+    <p>
+      I started out planning to study data science. Then I spent a summer at Panasonic's battery plant in Sparks and
+      another in facilities engineering at Micron, and both changed what I want to do next. I want to build machine
+      learning models that use large amounts of plant data to predict how physical processes behave.
     </p>
-    <p class="muted">
-      Internships at Micron Technology (facilities chemical engineering) and Panasonic Energy (cell and process
-      engineering). Applying to master’s programs for Fall 2027.
-    </p>
-    <div class="cta">
-      <a class="btn" href="/experience/">Experience</a>
-      <a class="btn ghost" href="/projects/">Projects</a>
-    </div>
+    <p>I'm applying to master's programs for Fall 2027.</p>
   </section>
 
   <h2>Interests</h2>
-  <div class="interests">
-    {interests.map((i) => (
-      <div class="card">
-        <h3>{i.name}</h3>
-        <p class="muted">{i.detail}</p>
-      </div>
-    ))}
-  </div>
+  <p>
+    Mostly physics-informed and hybrid machine learning: models that learn from data but still obey mass and energy
+    balances. I'm also interested in process monitoring with control charts and PCA, and in using production data to
+    find out why defects happen.
+  </p>
 
   <h2>Experience</h2>
-  <div class="grid">
-    {internships.map((r) => <ExperienceCard role={r} />)}
-  </div>
+  {internships.map((r) => (
+    <Entry title={r.company} href={`/experience/${r.slug}/`} meta={`${r.role}, ${r.place}. ${r.dates}.`} text={r.blurb} />
+  ))}
+  <p class="more"><a href="/experience/">All experience, including research</a></p>
 
   <h2>Projects</h2>
-  <div class="grid">
-    {projects.map((p) => <ProjectCard project={p} />)}
-  </div>
+  {projects.map((p) => (
+    <Entry title={p.title} href={`/projects/${p.slug}/`} meta={`${p.context}. ${p.status}.`} text={p.blurb} />
+  ))}
 
   <h2 id="contact">Contact</h2>
   <p>
-    Email <a href="mailto:eli.santos.paul@gmail.com">eli.santos.paul@gmail.com</a>, or find me on <a href="https://www.linkedin.com/in/elisantosengineering">LinkedIn</a> and <a href="https://github.com/epsantos333-sys">GitHub</a>.
+    Email me at <a href="mailto:eli.santos.paul@gmail.com">eli.santos.paul@gmail.com</a>. I'm also on <a href="https://www.linkedin.com/in/elisantosengineering">LinkedIn</a> and <a href="https://github.com/epsantos333-sys">GitHub</a>.
   </p>
 </Base>
 
 <style>
-  .hero { position: relative; isolation: isolate; padding: 24px 0 150px; }
-  /* Spans the full window width behind the intro; the noisy early runs sit on the left, under the buttons. */
+  .hero { position: relative; isolation: isolate; padding: 16px 0 150px; }
+  .hero h1 { margin-bottom: 0.2em; }
+  .hero .meta { margin-bottom: 1.4em; }
+  /* Spans the full window width below the intro text. */
   .hero-chart {
     position: absolute;
     z-index: -1;
     left: calc(50% - 50vw);
     width: 100vw;
     bottom: 0;
-    height: 200px;
+    height: 190px;
     opacity: 0.14;
     -webkit-mask-image: linear-gradient(to bottom, transparent, #000 30%);
     mask-image: linear-gradient(to bottom, transparent, #000 30%);
   }
-  @media (max-width: 640px) { .hero { padding-bottom: 110px; } .hero-chart { height: 150px; opacity: 0.11; } }
-  .lede { font-size: 1.2rem; max-width: 40em; }
-  .cta { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 20px; }
-  .btn {
-    font-family: var(--font-mono);
-    font-size: 0.9rem;
-    padding: 9px 16px;
-    border-radius: 4px;
-    background: var(--accent);
-    color: var(--bg);
-    text-decoration: none;
-  }
-  .btn:hover { background: var(--accent-2); color: var(--bg); }
-  .btn.ghost { background: transparent; color: var(--accent); border: 1px solid var(--accent); }
-  .btn.ghost:hover { color: var(--accent-2); border-color: var(--accent-2); background: transparent; }
-  .grid { display: grid; gap: 16px; }
-  .interests { display: grid; gap: 16px; grid-template-columns: repeat(2, 1fr); }
-  @media (max-width: 640px) { .interests { grid-template-columns: 1fr; } }
-  .interests > * { min-width: 0; }
-  .interests h3 { margin-bottom: 0.3em; }
-  .interests p { margin: 0; font-size: 0.95rem; }
+  @media (max-width: 640px) { .hero { padding-bottom: 110px; } .hero-chart { height: 140px; opacity: 0.11; } }
+  .more { font-family: var(--font-sans); font-size: 0.95rem; margin-top: 14px; }
 </style>
