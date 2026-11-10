@@ -3,10 +3,10 @@ import Base from '../../layouts/Base.astro';
 import ProjectCard from '../../components/ProjectCard.astro';
 import { projects } from '../../data/projects';
 ---
-<Base title="Projects" description="Process modeling, monitoring and numerical thermodynamics projects by Eli Santos.">
+<Base title="Projects" description="Process modeling and monitoring projects by Eli Santos.">
   <p class="label">Projects</p>
-  <h1>Modeling, monitoring and thermodynamics</h1>
-  <p class="muted">Each page covers the problem, the method, the results so far, and a diagram of how the pieces connect.</p>
+  <h1>Modeling and monitoring</h1>
+  <p class="muted">Each page covers the problem, the method and the results so far.</p>
   <div class="grid">
     {projects.map((p) => <ProjectCard project={p} />)}
   </div>

@@ -1,8 +1,26 @@
 ---
 import Base from '../layouts/Base.astro';
 import ProjectCard from '../components/ProjectCard.astro';
-import Diagram from '../components/diagrams/Diagram.astro';
 import { projects } from '../data/projects';
+
+const interests = [
+  {
+    name: 'Physics-informed machine learning',
+    detail: 'Models that learn from large datasets but keep mass and energy balances, so predictions stay physical outside the training data.',
+  },
+  {
+    name: 'Hybrid process models',
+    detail: 'Mechanistic kinetics and thermodynamics with a learned correction for the behavior first principles miss.',
+  },
+  {
+    name: 'Process monitoring',
+    detail: 'Statistical process control and multivariate monitoring on real plant and fab sensor data.',
+  },
+  {
+    name: 'Manufacturing yield',
+    detail: 'Using production data to find root causes and cut defects, as in semiconductor fabs and battery lines.',
+  },
+];
 ---
 <Base title="Home">
   <section class="hero">
@@ -22,7 +40,15 @@ import { projects } from '../data/projects';
     </div>
   </section>
 
-  <Diagram kind="fermentation" caption="Current work: a hybrid model where a neural network corrects the growth rate inside physical mass balances." />
+  <h2>Interests</h2>
+  <div class="interests">
+    {interests.map((i) => (
+      <div class="card">
+        <h3>{i.name}</h3>
+        <p class="muted">{i.detail}</p>
+      </div>
+    ))}
+  </div>
 
   <h2>Projects</h2>
   <div class="grid">
@@ -52,4 +78,9 @@ import { projects } from '../data/projects';
   .btn.ghost { background: transparent; color: var(--accent); border: 1px solid var(--accent); }
   .btn.ghost:hover { color: var(--accent-2); border-color: var(--accent-2); background: transparent; }
   .grid { display: grid; gap: 16px; }
+  .interests { display: grid; gap: 16px; grid-template-columns: repeat(2, 1fr); }
+  @media (max-width: 640px) { .interests { grid-template-columns: 1fr; } }
+  .interests > * { min-width: 0; }
+  .interests h3 { margin-bottom: 0.3em; }
+  .interests p { margin: 0; font-size: 0.95rem; }
 </style>
