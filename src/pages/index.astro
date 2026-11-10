@@ -4,12 +4,21 @@ import Entry from '../components/Entry.astro';
 import SpcChart from '../components/SpcChart.astro';
 import { internships } from '../data/experience';
 import { projects } from '../data/projects';
+import { existsSync } from 'node:fs';
+
+// Show the photo once public/headshot.jpg exists (square crop, at least 400 x 400 px).
+const hasPhoto = existsSync('public/headshot.jpg');
 ---
 <Base title="Home">
   <section class="hero">
     <div class="hero-chart" aria-hidden="true"><SpcChart part="i" /></div>
-    <h1>Eli Santos</h1>
-    <p class="meta">Chemical engineering, University of Nevada, Reno. Graduating May 2027.</p>
+    <div class="intro-head">
+      {hasPhoto && <img class="photo" src="/headshot.jpg" alt="Eli Santos" width="132" height="132" />}
+      <div>
+        <h1>Eli Santos</h1>
+        <p class="meta">Chemical engineering, University of Nevada, Reno. Graduating May 2027.</p>
+      </div>
+    </div>
     <p>
       I started out planning to study data science. Then I spent a summer at Panasonic's battery plant in Sparks and
       another in facilities engineering at Micron, and both changed what I want to do next. I want to build machine
@@ -45,7 +54,10 @@ import { projects } from '../data/projects';
 <style>
   .hero { position: relative; isolation: isolate; padding: 16px 0 150px; }
   .hero h1 { margin-bottom: 0.2em; }
-  .hero .meta { margin-bottom: 1.4em; }
+  .intro-head { display: flex; align-items: center; gap: 24px; margin-bottom: 1.4em; }
+  .intro-head .meta { margin: 0; }
+  .photo { width: 132px; height: 132px; border-radius: 50%; object-fit: cover; flex: none; }
+  @media (max-width: 480px) { .intro-head { flex-direction: column; align-items: flex-start; gap: 16px; } .photo { width: 104px; height: 104px; } }
   /* Spans the full window width below the intro text. */
   .hero-chart {
     position: absolute;
