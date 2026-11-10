@@ -1,6 +1,8 @@
 ---
 import Base from '../layouts/Base.astro';
 import ProjectCard from '../components/ProjectCard.astro';
+import ExperienceCard from '../components/ExperienceCard.astro';
+import { internships } from '../data/experience';
 import SpcChart from '../components/SpcChart.astro';
 import { projects } from '../data/projects';
 
@@ -37,8 +39,8 @@ const interests = [
       engineering). Applying to master’s programs for Fall 2027.
     </p>
     <div class="cta">
-      <a class="btn" href="/projects/">See projects</a>
-      <a class="btn ghost" href="/about/">Experience and resume</a>
+      <a class="btn" href="/experience/">Experience</a>
+      <a class="btn ghost" href="/projects/">Projects</a>
     </div>
   </section>
 
@@ -50,6 +52,11 @@ const interests = [
         <p class="muted">{i.detail}</p>
       </div>
     ))}
+  </div>
+
+  <h2>Experience</h2>
+  <div class="grid">
+    {internships.map((r) => <ExperienceCard role={r} />)}
   </div>
 
   <h2>Projects</h2>

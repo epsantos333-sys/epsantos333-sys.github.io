@@ -1,0 +1,52 @@
+---
+import Base from '../../layouts/Base.astro';
+import { internships, type Role } from '../../data/experience';
+
+export function getStaticPaths() {
+  return internships.map((role) => ({ params: { slug: role.slug }, props: { role } }));
+}
+
+const { role: r } = Astro.props as { role: Role };
+---
+<Base title={r.company} description={`${r.role} at ${r.company}: ${r.summary}`}>
+  <p><a class="mono back" href="/experience/">← experience</a></p>
+  <p class="label">{r.kind} · {r.dates} · {r.place}</p>
+  <h1>{r.company}</h1>
+  <p class="role">{r.role}</p>
+  <p class="summary">{r.summary}</p>
+
+  <dl class="metrics">
+    {r.metrics.map((m) => (
+      <div><dt>{m.value}</dt><dd>{m.label}</dd></div>
+    ))}
+  </dl>
+
+  <h2>What I worked on</h2>
+  <div class="work">
+    {r.work.map((w) => (
+      <section class="card">
+        <h3>{w.title}</h3>
+        <p>{w.did}</p>
+        {w.outcome && <p class="outcome"><span class="label">Result</span> {w.outcome}</p>}
+      </section>
+    ))}
+  </div>
+
+  <h2>Tools and methods</h2>
+  <ul class="tags">{r.skills.map((s) => <li>{s}</li>)}</ul>
+</Base>
+
+<style>
+  .back { text-decoration: none; font-size: 0.9rem; }
+  .role { font-size: 1.15rem; color: var(--muted); margin-top: -0.3em; }
+  .summary { max-width: 42em; }
+  .metrics { display: grid; grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); gap: 16px; margin: 28px 0 8px; }
+  .metrics > div { min-width: 0; border-left: 2px solid var(--text); padding-left: 12px; }
+  .metrics dt { font-weight: 600; font-size: 1.5rem; line-height: 1.2; font-variant-numeric: tabular-nums; }
+  .metrics dd { margin: 4px 0 0; color: var(--muted); font-size: 0.9rem; }
+  .work { display: grid; gap: 14px; }
+  .work h3 { margin-bottom: 0.4em; }
+  .work p { margin-bottom: 0.6em; }
+  .work p:last-child { margin-bottom: 0; }
+  .outcome .label { margin-right: 6px; color: var(--muted); }
+</style>
