@@ -1,6 +1,7 @@
 ---
 import Base from '../layouts/Base.astro';
 import ProjectCard from '../components/ProjectCard.astro';
+import SpcChart from '../components/SpcChart.astro';
 import { projects } from '../data/projects';
 
 const interests = [
@@ -24,6 +25,7 @@ const interests = [
 ---
 <Base title="Home">
   <section class="hero">
+    <div class="hero-chart" aria-hidden="true"><SpcChart part="i" /></div>
     <p class="label">Chemical engineering · UNR · B.S. May 2027</p>
     <h1>Eli Santos</h1>
     <p class="lede">
@@ -62,7 +64,20 @@ const interests = [
 </Base>
 
 <style>
-  .hero { padding: 24px 0 8px; }
+  .hero { position: relative; isolation: isolate; padding: 24px 0 150px; }
+  /* Spans the full window width behind the intro; the noisy early runs sit on the left, under the buttons. */
+  .hero-chart {
+    position: absolute;
+    z-index: -1;
+    left: calc(50% - 50vw);
+    width: 100vw;
+    bottom: 0;
+    height: 200px;
+    opacity: 0.14;
+    -webkit-mask-image: linear-gradient(to bottom, transparent, #000 30%);
+    mask-image: linear-gradient(to bottom, transparent, #000 30%);
+  }
+  @media (max-width: 640px) { .hero { padding-bottom: 110px; } .hero-chart { height: 150px; opacity: 0.11; } }
   .lede { font-size: 1.2rem; max-width: 40em; }
   .cta { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 20px; }
   .btn {
