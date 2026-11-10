@@ -20,10 +20,11 @@ export const roles: Role[] = [
     role: "Facilities Chemical Engineering Intern",
     place: "Boise, ID",
     dates: "May to Aug 2026",
+    // blurb and summary: Eli's LinkedIn description, verbatim (11/10)
     blurb:
-      "Helped plan an AI agent that finds records across 200+ chemical systems in seconds instead of 30 minutes. Also worked on tank corrosion, alarm history and the site's integrity standard.",
+      "Developed and implemented a comprehensive tank and vessel integrity standard across multiple facility teams to ensure operational reliability and regulatory compliance. Coordinated cross-functional baseline inspections to establish a centralized asset tracking system. Additionally, streamlined facility operations by prototyping an AI-driven query agent for chemical systems and consolidating historical alarm data to optimize technician onboarding.",
     summary:
-      "I spent the summer in facilities chemical engineering at Micron's Boise site. Most of the work came down to data: making system records easy to find, filling a ten-year gap in a tank's inspection baseline, and sorting twenty years of alarms.",
+      "Developed and implemented a comprehensive tank and vessel integrity standard across multiple facility teams to ensure operational reliability and regulatory compliance. Coordinated cross-functional baseline inspections to establish a centralized asset tracking system. Additionally, streamlined facility operations by prototyping an AI-driven query agent for chemical systems and consolidating historical alarm data to optimize technician onboarding.",
     work: [
       {
         title: "An AI agent for chemical-system records",
@@ -50,10 +51,11 @@ export const roles: Role[] = [
     role: "Cell and Process Engineering Intern",
     place: "Sparks, NV",
     dates: "May to Aug 2025",
+    // blurb and summary: Eli's LinkedIn description, verbatim (11/10)
     blurb:
-      "Cut false rejects on an anode tab-folding vision check by half, about 64,000 cells a year. Modeled current spikes to support moving leak testing from DC to AC on 3 lines.",
+      "Optimized high-volume manufacturing processes by significantly reducing false defect detections and improving machine reliability. Engineered data pipelines using SQL, Python, and JMP to analyze production trends and validate inspection methodologies. Collaborated with international technical teams to implement testing improvements, update standard operating procedures, and enhance overall line efficiency.",
     summary:
-      "Cell and process engineering on high-volume lithium-ion battery lines. Two inspection steps were rejecting good cells, and I worked on both.",
+      "Optimized high-volume manufacturing processes by significantly reducing false defect detections and improving machine reliability. Engineered data pipelines using SQL, Python, and JMP to analyze production trends and validate inspection methodologies. Collaborated with international technical teams to implement testing improvements, update standard operating procedures, and enhance overall line efficiency.",
     work: [
       {
         title: "High-voltage leak test",
